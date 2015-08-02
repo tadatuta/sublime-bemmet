@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "bemmet": "^1.3.0",
+    "get-stdin": "^4.0.1"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "private": true
+}
