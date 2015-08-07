@@ -7,10 +7,13 @@ stdin(function (textBeforeCaret) {
             return str.replace(/\ /g, 'S'); // S is used as a space placeholder
         }),
         spaceNearCaretIdx = textBeforeCaretNoSpaces.lastIndexOf(' '),
-        selection = spaceNearCaretIdx > -1 ? textBeforeCaret.substr(spaceNearCaretIdx) : textBeforeCaret;
+        selection = (spaceNearCaretIdx > -1 ? textBeforeCaret.substr(spaceNearCaretIdx) : textBeforeCaret).trim(),
+        // regexp gets 'b1' from strings like { block: 'b1' }
+        parentBlock = /block['"\s]*:(?:\s)?['"]{1}(.*?)['"]{1}/
+            .exec(textBeforeCaretNoSpaces.substr(textBeforeCaretNoSpaces.lastIndexOf('block')))[1];
 
     try {
-        process.stdout.write(textBeforeCaret.replace(selection, bemmet.stringify(selection)));
+        process.stdout.write(textBeforeCaret.replace(selection, bemmet.stringify(selection, parentBlock)));
     } catch(err) {
         console.error(err);
     }
