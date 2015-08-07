@@ -10,7 +10,9 @@ stdin(function (textBeforeCaret) {
         selection = (spaceNearCaretIdx > -1 ? textBeforeCaret.substr(spaceNearCaretIdx) : textBeforeCaret).trim(),
         // regexp gets 'b1' from strings like { block: 'b1' }
         parentBlock = /block['"\s]*:(?:\s)?['"]{1}(.*?)['"]{1}/
-            .exec(textBeforeCaretNoSpaces.substr(textBeforeCaretNoSpaces.lastIndexOf('block')))[1];
+            .exec(textBeforeCaretNoSpaces.substr(textBeforeCaretNoSpaces.lastIndexOf('block')));
+
+        parentBlock && parentBlock[1] && (parentBlock = parentBlock[1]);
 
     try {
         process.stdout.write(textBeforeCaret.replace(selection, bemmet.stringify(selection, parentBlock)));
