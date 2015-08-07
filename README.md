@@ -22,7 +22,7 @@ Example:
 
 ```json
 [
-	{ "keys": ["alt+super+e"], "command": "bemmet" }
+	{ "keys": ["super+b"], "command": "bemmet" }
 ]
 ```
 

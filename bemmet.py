@@ -18,19 +18,19 @@ BIN_PATH = join(sublime.packages_path(), dirname(realpath(__file__)), 'bemmet.js
 class bemmetCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		if not self.has_selection():
-			region = sublime.Region(0, self.view.size())
+			region = sublime.Region(0, self.view.sel()[0].begin())
 			originalBuffer = self.view.substr(region)
-			prefixed = self.prefix(originalBuffer)
-			if prefixed:
-				self.view.replace(edit, region, prefixed)
+			bemmeted = self.prefix(originalBuffer)
+			if bemmeted:
+				self.view.replace(edit, region, bemmeted)
 			return
 		for region in self.view.sel():
 			if region.empty():
 				continue
 			originalBuffer = self.view.substr(region)
-			prefixed = self.prefix(originalBuffer)
-			if prefixed:
-				self.view.replace(edit, region, prefixed)
+			bemmeted = self.prefix(originalBuffer)
+			if bemmeted:
+				self.view.replace(edit, region, bemmeted)
 
 	def prefix(self, data):
 		try:
