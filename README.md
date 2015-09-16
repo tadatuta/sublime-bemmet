@@ -26,6 +26,23 @@ Example:
 ]
 ```
 
+### Autoindentation after abbreviation expantion
+
+If you want to automatically indent expanded code, you may just run `reindent` command after `bemmet`. To do so open `Tools` -> `Create plugin`, paste following code:
+```python
+import sublime, sublime_plugin
+
+class bemmetAndReindentCommand(sublime_plugin.WindowCommand):
+    def run(self):
+        self.window.run_command("bemmet")
+        self.window.run_command("reindent", {"single_line": false})
+```
+and then update a key binding to run `bemmet_and_reindent`:
+```json
+[
+    { "keys": ["super+b"], "command": "bemmet_and_reindent" }
+]
+```
 
 ## License
 
