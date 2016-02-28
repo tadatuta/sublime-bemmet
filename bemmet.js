@@ -15,8 +15,31 @@ stdin(function (textBeforeCaret) {
 
     parentBlock && parentBlock[1] && (parentBlock = parentBlock[1]);
 
+    var textLines = textBeforeCaretNoSpaces.split(/\r?\n/),
+        padding = textLines[textLines.length - 1].match(/^(\s+)/),
+        bemjson = '';
+
+    if (padding !== null) {
+        padding = padding[0];
+    } else {
+        padding = '';
+    }
+
     try {
-        process.stdout.write(textBeforeCaret.replace(selection, bemmet.stringify(selection, parentBlock)));
+        bemjson = bemmet.stringify(selection, parentBlock);
+    } catch(err) {
+        console.error(err);
+    }
+
+    var replacedContent = bemjson
+        .split(/\r?\n/)
+        .map(function(line, i) {
+            return i > 0 ? padding + line : line;
+        })
+        .join('\n');
+
+    try {
+        process.stdout.write(textBeforeCaret.replace(selection, replacedContent));
     } catch(err) {
         console.error(err);
     }
