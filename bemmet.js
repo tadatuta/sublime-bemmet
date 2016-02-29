@@ -15,15 +15,7 @@ stdin(function (textBeforeCaret) {
 
     parentBlock && parentBlock[1] && (parentBlock = parentBlock[1]);
 
-    var textLines = textBeforeCaretNoSpaces.split(/\r?\n/),
-        padding = textLines[textLines.length - 1].match(/^(\s+)/),
-        bemjson = '';
-
-    if (padding !== null) {
-        padding = padding[0];
-    } else {
-        padding = '';
-    }
+    var bemjson = '';
 
     try {
         bemjson = bemmet.stringify(selection, parentBlock);
@@ -31,10 +23,15 @@ stdin(function (textBeforeCaret) {
         console.error(err);
     }
 
-    var replacedContent = bemjson
+    var pads = 1,
+        replacedContent = bemjson
         .split(/\r?\n/)
         .map(function(line, i) {
-            return i > 0 ? padding + line : line;
+            if (line.indexOf('{}') > -1) {
+                line = line.replace('{}', '{${' + pads++ + '}}');
+            }
+
+            return line;
         })
         .join('\n');
 
