@@ -22,7 +22,7 @@ class bemmetCommand(sublime_plugin.TextCommand):
 			originalBuffer = self.view.substr(region)
 			bemmeted = self.prefix(originalBuffer)
 			if bemmeted:
-				self.view.replace(edit, region, bemmeted)
+				self.view.run_command('insert_snippet', {'contents': bemmeted})
 			return
 		for region in self.view.sel():
 			if region.empty():
@@ -30,7 +30,7 @@ class bemmetCommand(sublime_plugin.TextCommand):
 			originalBuffer = self.view.substr(region)
 			bemmeted = self.prefix(originalBuffer)
 			if bemmeted:
-				self.view.replace(edit, region, bemmeted)
+				self.view.run_command('insert_snippet', {'contents': bemmeted})
 
 	def prefix(self, data):
 		try:
