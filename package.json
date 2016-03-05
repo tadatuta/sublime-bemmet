@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "bemmet": "^1.5.1",
+    "bemmet": "^2.0.0",
     "get-stdin": "^4.0.1"
   },
   "engines": {
